@@ -1,6 +1,6 @@
 #this is the code to convert .mtz to .mrc
 
-
+from __future__ import division
 from string import Template
 import os
 from CCP4Dispatchers import dispatcher_builder
@@ -48,8 +48,8 @@ from CCP4Dispatchers import dispatcher_builder
 #################################################################
 #now code edited to alow change of folder of files and of the output folders/files
 #this code is currently working
-folder1= "/dls/science/users/ycc62267/mtzfdr"
-out1="/dls/science/users/ycc62267/mapfdr"
+#folder1= "/dls/science/users/ycc62267/mtzfdr/tests"
+
 def mtz2map(folder,out):
   for file in os.listdir(folder):
     f=str(file)
@@ -62,7 +62,7 @@ def mtz2map(folder,out):
     mapout = os.path.join(out,os.path.splitext(f)[0])+".map"
     keywords='\n'.join([
     "mtzin %s" % os.path.join(folder,f), 
-    "colin-fc /*/*/[FWT,PHIC]",
+    "colin-fc /*/*/[F,PHI]",
     "mapout %s" %mapout,
     "stats",
     "stats-radius 4.0"
@@ -70,64 +70,117 @@ def mtz2map(folder,out):
     d=dispatcher_builder("cfft", cmd, keywords)
     d.call()
     assert os.path.exists(mapout)
-mtz2map(folder1,out1)
+
 ####################################################################
-#code for calling mtzdmp
-#this is to find the information for unit cell a b c, and for the space group
-#this code is currently incomplete
-folder1="/dls/science/users/ycc62267/mtzfdr"
+##code for calling mtzdmp
+##this is to find the information for unit cell a b c, and for the space group
+##using Melaine's code with small adjustments
 
-def mtzdump(folder):
-  for file in os.listdir(folder):
-    f=str(file)
-    print f
-    assert os.path.exists(folder)
-    cmd = Template(' '.join([
-     "-stdin"])
-    keywords='\n'.join([
-    "hklin %s" %os.path.join(folder,f),
-    "HEADER[space group]"
-    ])
-    #i am unsure and need to sort the keywords here to only select the relavent
-    #information preferably as a string)
-    d=dispatcher_builder("mtzdump", cmd,keywords)
-    d.call()
+
+
+class MtzData(object):
+  def __init__(self, filename):
+    from iotbx import mtz
+    import os.path
+
+    #check if an MTZ file has been provided, return error is not
+    if filename is None:
+      raise RuntimeError('Need to specify hklin filename')
+    elif not os.path.exists(filename):
+      raise RuntimeError('%s does not exist' %filename)
+    self.mtz_file= mtz.object(filename)
+    self.sg_num = self.mtz_file.space_group_number()
+    self.cell = self._get_cell()
+    #cols = self.nuz_file.column_labels()
+    #col_types = self.mtz_file.column_types()
+    #
+    ##here i have commented out the inclusing of f type columns because they are
+    ##not needed for this code
+    #
+    ##pull out first column of type F; if there are multiple F and Q columns then
+    ##subsequent ones will be ignored; this may need amending for different
+    ##phasing methods
+    ##getting column with structure factors F
+    #findex = col_types.index('F')
+    #self.F = cols[findex]
+    ##getting column with errors of structure factors 'Q'
+    #qindex = findex +1
+    #assert col_types[qindex]=='Q'
+    #self.Q = cols[qindex]
+    #
+    #this may be a good place to fine phslayout
+    return 
+
+  def _get_cell(self):
+    #this function is used to extract the unit cell information from an MTZ
+    #file. it also compares that the unit cells are isomorphous if more than one
+    #is given, and shows an error if not.
+
+    from libtbx.test_utils import approx_equal
+    xls = self.mtz_file.crystals()
+    ucs = [e.unit_cell() for e in xls]
+
+    cell0 = ucs[0]
+    #this tests all cells to be similar
+    tst = all([cell0.is_similar_to(e) for e in ucs])
+
+    if not tst:
+      print "multiple unit cells found! Only the first will be used:"
+      for cell in ucs: print cell.parameters()
+
+        #this could be improved by finding a way for one to continue by picking
+        #a particular cell
+    return cell0
     
-#mtzdump(folder1)
-print(mtzdump(folder1))
-
-######################################################################
+#######################################################################
 #A similar structure to convert .phs to .mtz
-#this code is currently incomplete
-folder1= "/dls/science/users/ycc62267/phsfdr"
-out1="/dls/science/users/ycc62267/mtzfdr"
-def phs2mtz(folder,out):
+#this code works as of 5/7/18
+
+def phs2mtz(folder,mtzfolder,out):
   for file in os.listdir(folder):
     f=str(file)
     print f
+
+    name=os.path.splitext(f)[0]
+    name1=name+"_in"
+    mtzin= os.path.join(mtzfolder,name1)+".mtz"
+    y=MtzData(mtzin)
+
     assert os.path.exists(folder)
     assert os.path.exists(out)
-    cmd = Template(' '.join([
-     "-stdin"]))
+    assert os.path.exists(mtzfolder)
+
+    hklout = os.path.join(out,name)+".mtz"
+    cmd = Template(' '.join(["hklin %s" %os.path.join(folder,f), "hklout %s"
+    %hklout
+     ]))
     cmd = cmd.substitute(os.environ)
 
-    mtzout = os.path.join(out,os.path.splitext(f)[0])+".mtz"
-    celllengths = ??????
-    phslayout= ?????
-    spacegroup=?????
+    celllengths = str(y.cell).strip('(').strip(')') 
+    phslayout= "H K L F FOM PHI SIGF"
+    spacegroup=str(y.sg_num) 
+    CTYPOUT = "H H H F W P Q"
 
     keywords='\n'.join([
-    "hklin %s" %os.path.join(folder,f),
-    "cell %s" %celllenghts,
-    "colin %s" %phslayout,
-    "spacegroup %s" %spacegroup,
-    "mtzout %s" %mtzout
+    "CELL  %s" %celllengths,
+    "SYMM %s" %spacegroup,
+    "labout %s" %phslayout,
+    "CTYPOUT %s" %CTYPOUT,
     ])
-    #need to change -colin according to the columns actually present in the file 
-    d=dispatcher_builder("convert2mtz", cmd, keywords)
+ 
+    d=dispatcher_builder("f2mtz", cmd, keywords)
     d.call()
-    assert os.path.exists(mtzout)
-phs2mtz(folder1,out1)
+
+    assert os.path.exists(hklout)
+##############################################################################
+out1="/dls/science/users/ycc62267/mtzfdr/out"
+folder1= "/dls/science/users/ycc62267/phsfdr/in"
+mtzfolder1="/dls/science/users/ycc62267/mtzfdr/head"
+out2="/dls/science/users/ycc62267/mapfdr/tests"
+
+
+phs2mtz(folder1,mtzfolder1,out1)
+mtz2map(out1,out2)
 
 
 
