@@ -1,4 +1,4 @@
-#this is the code to convert .mtz to .mrc
+#this is the code to convert .phs and .mtz to .map
 
 from __future__ import division
 from string import Template
@@ -6,46 +6,7 @@ import os
 from CCP4Dispatchers import dispatcher_builder
 
 ####################################################################
-#Code edited to allow a change of input
-#easiest way to call CCP4 functions into python code 
-#cmd = Template(' '.join([
-#  "-stdin"]))
-#cmd = cmd.substitute(os.environ)
-#
-##this askes to input the file location
-#f=raw_input("""/dls/science/users/ycc62267/3a5isf_refmac1.mtz""")
-#
-#keywords="""
-#mtzin """+f+"""
-#colin-fc /*/*/[FWT,PHIC]
-#mapout /home/ycc62267/Desktop/3a5isf_fft1.map
-#stats
-#stats-radius 4.0
-#"""
-#
-#d=dispatcher_builder("cfft", cmd, keywords)
-#print cmd
-#
-#d.call()
-#print "Hello"
-###################################################################
-#This is the origninal code from monday 2/7/18
-#easiest way to call CCP4 functions into python code 
-#cmd = Template(' '.join([
-#  "-stdin"]))
-#cmd = cmd.substitute(os.environ)
 
-#keywords="""
-#mtzin /dls/science/users/ycc62267/3a5isf_refmac1.mtz
-#colin-fc /*/*/[FWT,PHIC]
-#mapout /home/ycc62267/Desktop/3a5isf_fft1.map
-#stats
-#stats-radius 4.0
-#"""
-#
-#d=dispatcher_builder("cfft", cmd, keywords)
-#d.call()
-#################################################################
 #now code edited to alow change of folder of files and of the output folders/files
 #this code is currently working
 #folder1= "/dls/science/users/ycc62267/mtzfdr/tests"
@@ -76,8 +37,6 @@ def mtz2map(folder,out):
 ##this is to find the information for unit cell a b c, and for the space group
 ##using Melaine's code with small adjustments
 
-
-
 class MtzData(object):
   def __init__(self, filename):
     from iotbx import mtz
@@ -94,20 +53,9 @@ class MtzData(object):
     #cols = self.nuz_file.column_labels()
     #col_types = self.mtz_file.column_types()
     #
-    ##here i have commented out the inclusing of f type columns because they are
+    ##here i have removed the code incuding the addition of f type and q type columns because they are
     ##not needed for this code
-    #
-    ##pull out first column of type F; if there are multiple F and Q columns then
-    ##subsequent ones will be ignored; this may need amending for different
-    ##phasing methods
-    ##getting column with structure factors F
-    #findex = col_types.index('F')
-    #self.F = cols[findex]
-    ##getting column with errors of structure factors 'Q'
-    #qindex = findex +1
-    #assert col_types[qindex]=='Q'
-    #self.Q = cols[qindex]
-    #
+    #    
     #this may be a good place to fine phslayout
     return 
 
@@ -145,7 +93,7 @@ def phs2mtz(folder,mtzfolder,out):
     name1=name+"_in"
     mtzin= os.path.join(mtzfolder,name1)+".mtz"
     y=MtzData(mtzin)
-
+    
     assert os.path.exists(folder)
     assert os.path.exists(out)
     assert os.path.exists(mtzfolder)
@@ -156,7 +104,8 @@ def phs2mtz(folder,mtzfolder,out):
      ]))
     cmd = cmd.substitute(os.environ)
 
-    celllengths = str(y.cell).strip('(').strip(')') 
+    celllengths = str(y.cell).strip('(').strip(')').replace(',',' ')
+    #celllengths = "66.4687 112.149 149.93 90.00 90.00 90.00"
     phslayout= "H K L F FOM PHI SIGF"
     spacegroup=str(y.sg_num) 
     CTYPOUT = "H H H F W P Q"
@@ -167,6 +116,7 @@ def phs2mtz(folder,mtzfolder,out):
     "labout %s" %phslayout,
     "CTYPOUT %s" %CTYPOUT,
     ])
+    print keywords
  
     d=dispatcher_builder("f2mtz", cmd, keywords)
     d.call()
