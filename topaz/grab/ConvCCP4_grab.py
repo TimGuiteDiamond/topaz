@@ -110,8 +110,10 @@ class MtzData(object):
     if not tst:
       print "multiple unit cells found! Only the first will be used:"
       text.write('multiple unit cells found! Only the first will be used\n')
-      for cell in ucs: print cell.parameters()
-
+      for cell in ucs: 
+        print cell.parameters()
+        text.write( cell.parameters())
+                        
         #this could be improved by finding a way for one to continue by picking
         #a particular cell
     text.write('_get_cell successful\n')
@@ -181,7 +183,44 @@ def phs2mtz(phsfile,mtzfile,out,logfile,name):
       raise RuntimeError('hklout %s does not exist, the phs2mtz program has not worked.'%hklout)
     text.write('phs2mtz successful\n')
     text.close()
-##############################################################################
+#############################################################################
+# This is a function to convert the map into a map of a given size using the
+# spacegroup of the crystal
+
+def mapbox(folder,out,mtzfile,name,xyzlim,logfile):
+
+  text=open(logfile,'a')
+
+  mapin = os.path.join(folder, name +'.map')
+  mapout = os.path.join(out,name)+'.map'
+  XYZLIM = xyzlim
+  
+  y=MtzData(mtzfile,logfile)
+  sym=str(y.sg_num)
+
+  cmd=Template(' '.join(["mapin %s" %mapin,  "mapout %s" %mapout]))
+  cmd = cmd.substitute(os.environ)
+
+  keywords= '\n'.join([
+  "XYZLIM %s" %XYZLIM,
+  "EXTEND XTAL",
+  "SYMMETRY %s" %sym,
+  ])
+
+  d=dispatcher_builder("mapmask",cmd,keywords)
+  d.call()
+
+  if not os.path.exists(mapout):
+    text.write('mapout %s does not exist, the mapbox program has not worked.'%mapout)
+    raise RuntimeError('mapout %s does not exist, the mapbox program has not
+    worked.' %mapout)
+
+  text.write('mapbox successful\n')
+  text.close()
+
+
+###################################################################################
+
 #out1="/dls/science/users/ycc62267/mtzfdr/out"
 #folder1= "/dls/science/users/ycc62267/phsfdr/in"
 #mtzfolder1="/dls/science/users/ycc62267/mtzfdr/head"

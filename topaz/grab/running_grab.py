@@ -6,18 +6,23 @@
 from ConvCCP4_grab import phs2mtz
 from ConvCCP4_grab import mtz2map
 from best import BestSym
+from ConvCCP4_grab import mapbox
 import os
 import shutil
 #####################################################################
-def phs2map(folder,output_dir):
-    #check that the temp directory does not already exist
+def phs2map(folder,output_dir,output_dir2,xyzlim):
+    #check that the output  directories does not already exist
 
     if not os.path.isdir(output_dir):
       print('creating output directory '+output_dir)
       os.mkdir(output_dir)
 
+    if not os.path.isdir(output_dir2):
+      print 'creating output directory '+output_dir2
+      os.mkdir(output_dir2)
+
 #m can be deleated after tests
-    m=0
+#    m=0
 
     logfile=os.path.join(output_dir, 'logfile_phs2map.txt')
     text = open(logfile,'a')
@@ -98,16 +103,19 @@ def phs2map(folder,output_dir):
             text.close()
      
             #text=open(logfile,'a')
-            print('calling phs2mtz')
+            print 'calling phs2mtz'
             #text.write('calling phs2mtz. \n\n')
             #text.close()
             phs2mtz(phsfile,mtzfile,temp_out,logfile,type_name)
 
-            print('calling mtz2map')
+            print 'calling mtz2map'
             #text = open(logfile,'a') 
             #text.write('calling mtz2map. \n\n')
             #text.close()
             mtz2map(temp_out,output_dir,logfile,type_name)
+
+            print 'calling mapbox'
+            mapbox(output_dir,output_dir2,mtzfile,type_name,xyzlim,logfile)
         else:
           continue
 
@@ -125,9 +133,10 @@ def phs2map(folder,output_dir):
 ######################################################################
 
 out1="/dls/mx-scratch/ycc62267/mapfdr"
+out2 = "/dls/mx-scratch/ycc62267/mapfdrbox"
 folder1 = "/dls/mx-scratch/melanie/for_METRIX/results_201710"
+xyzlim1 = '0 200 0 200 0 200'
 
-
-phs2map(folder1,out1)
+phs2map(folder1,out1,out2,xyzlim1)
 
 
