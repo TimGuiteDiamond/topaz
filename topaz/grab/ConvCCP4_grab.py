@@ -209,11 +209,12 @@ def mapbox(folder,out,mtzfile,name,xyzlim,logfile):
 
   d=dispatcher_builder("mapmask",cmd,keywords)
   d.call()
+  
+  print XYZLIM
 
   if not os.path.exists(mapout):
     text.write('mapout %s does not exist, the mapbox program has not worked.'%mapout)
-    raise RuntimeError('mapout %s does not exist, the mapbox program has not
-    worked.' %mapout)
+    raise RuntimeError('mapout %s does not exist, the mapbox program has not worked.' %mapout)
 
   text.write('mapbox successful\n')
   text.close()

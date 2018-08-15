@@ -22,7 +22,7 @@ def phs2map(folder,output_dir,output_dir2,xyzlim):
       os.mkdir(output_dir2)
 
 #m can be deleated after tests
-#    m=0
+    m=0
 
     logfile=os.path.join(output_dir, 'logfile_phs2map.txt')
     text = open(logfile,'a')
@@ -77,9 +77,9 @@ def phs2map(folder,output_dir,output_dir2,xyzlim):
         print infofile
         best_symmetry = str(BestSym(infofile).best)
 
-     #   m+=1
-     #   if m>3:
-     #     break
+        m+=1
+        if m>3:
+          break
 
         phsdir = os.path.join(protein_name_directory,protein_name,best_symmetry)
         if not os.path.exists(phsdir):
@@ -119,12 +119,6 @@ def phs2map(folder,output_dir,output_dir2,xyzlim):
         else:
           continue
 
-#for testing i will limit the number of itterations
-      #  if m>2:
-      #    break
-      #  else:
-      #    m+=1
-
 
    # text = open(logfile,'a')
    # text.write('deleating tempory directory \n')  
@@ -132,11 +126,40 @@ def phs2map(folder,output_dir,output_dir2,xyzlim):
    # text.close()
 ######################################################################
 
-out1="/dls/mx-scratch/ycc62267/mapfdr"
-out2 = "/dls/mx-scratch/ycc62267/mapfdrbox"
-folder1 = "/dls/mx-scratch/melanie/for_METRIX/results_201710"
-xyzlim1 = '0 200 0 200 0 200'
 
-phs2map(folder1,out1,out2,xyzlim1)
+
+
+########################################################################
+#now try to make a module
+def main():
+  import argparse
+
+  parser = argparse.ArgumentParser(description='command line argument')
+  parser.add_argument('--out1',dest = 'out1', type = str, help = 'the directory to output the original(non-boxed)images.', default =
+  '/dls/mx-scratch/ycc62267/mapfdr')
+  parser.add_argument('--out2',dest= 'out2', type = str, help = 'the directory to output the maps as boxes', default= '/dls/mx-scratch/ycc62267/mapfdrbox.')
+  parser.add_argument('--folder1', dest = 'folder1',type = str, help = 'the directory to find the files (directory that includes EP_Phasing and 20171025)', default = '/dls/mx-scratch/melanie/for_METRIX/results_201710')
+  parser.add_argument('--xyslim1', dest = 'xyzlim1',type = str, help = 'the dimensions of the required map box <x1> <x2> <y1> <y2> <z1> <z2>.', default = '0 200 0 200 0 200')
+
+  args = parser.parse_args()
+
+  out1=args.out1
+  out2=args.out2
+  folder1=args.folder1
+  xyzlim1=args.xyzlim1
+
+  phs2map(folder1,out1,out2,xyzlim1)
+
+if __name__ == "__main__":
+  main()
+
+#########################################################################
+  
+#out1="/dls/mx-scratch/ycc62267/mapfdr"
+#out2 = "/dls/mx-scratch/ycc62267/mapfdrbox"
+#folder1 = "/dls/mx-scratch/melanie/for_METRIX/results_201710"
+#xyzlim1 = '0 200 0 200 0 200'
+
+#phs2map(folder1,out1,out2,xyzlim1)
 
 
