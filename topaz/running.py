@@ -60,7 +60,8 @@ def phs2map(folder,output_dir,output_dir2,xyzlim,raw = True):
       if num > 10:
         print 'there is a problem'
         text.write('there is a problem with the number of tempory directories that already exist')
-        raise RuntimeError('there is a problem with the number of tempory directories that already exist')
+        raise RuntimeError(
+                'there is a problem with the number of tempory directories that already exist')
     os.mkdir(temp_out)
     if not os.path.exists(temp_out):
       text.write('there is a problem creating a tempory directory')
@@ -80,14 +81,18 @@ def phs2map(folder,output_dir,output_dir2,xyzlim,raw = True):
         text=open(logfile,'a')
         text.write('\n\n'+protein_name+' \n')
          
-        mtzfile = os.path.join(mtz_name_directory,protein_name,'DataFiles/AUTOMATIC_DEFAULT_free.mtz')
+        mtzfile = os.path.join(mtz_name_directory,
+                                protein_name,
+                                'DataFiles/AUTOMATIC_DEFAULT_free.mtz')
         if not os.path.exists(mtzfile):
           print '%s does not exist' %mtzfile
           text.write('%s does not exist\n' %mtzfile)
           continue
 
 
-        infofile =  os.path.join(protein_name_directory,protein_name,'simple_xia2_to_shelxcde.log')
+        infofile =  os.path.join(protein_name_directory,
+                                  protein_name,
+                                  'simple_xia2_to_shelxcde.log')
         if not os.path.exists(infofile):
           print 'simple_xia2_to_shelxcde.log does not exist for '+protein_name
           text.write('simple_xia2_to_shelxcde.log does not exist for %s\n ' %protein_name)
@@ -156,10 +161,26 @@ def main():
   import argparse
 
   parser = argparse.ArgumentParser(description='command line argument')
-  parser.add_argument('--out1',dest = 'out1', type = str, help = 'the directoryto output the original(non-boxed)images.', default ='/dls/mx-scratch/ycc62267/mapfdrraw')
-  parser.add_argument('--out2',dest= 'out2', type = str, help = 'the directory to output the maps as boxes', default= '/dls/mx-scratch/ycc62267/mapfdrrawbox')
-  parser.add_argument('--folder1', dest = 'folder1',type = str, help = 'the directory to find the files (directory that includes EP_Phasing and 20171025)', default = '/dls/mx-scratch/melanie/for_METRIX/results_201710')
-  parser.add_argument('--xyslim1', dest = 'xyzlim1',type = str, help = 'the dimensions of the required map box <x1> <x2> <y1> <y2> <z1> <z2>.', default = '0 200 0 200 0 200')
+  parser.add_argument('--out1',
+                      dest = 'out1', 
+                      type = str, 
+                      help = 'the directoryto output the original(non-boxed)images.', 
+                      default ='/dls/mx-scratch/ycc62267/mapfdrraw')
+  parser.add_argument('--out2',
+                      dest= 'out2', 
+                      type = str, 
+                      help = 'the directory to output the maps as boxes', 
+                      default= '/dls/mx-scratch/ycc62267/mapfdrrawbox')
+  parser.add_argument('--folder1', 
+                      dest = 'folder1',
+                      type = str, 
+                      help = 'the directory to find the files (inc EP_Phasing and 20171025)', 
+                      default = '/dls/mx-scratch/melanie/for_METRIX/results_201710')
+  parser.add_argument('--xyslim1', 
+                      dest = 'xyzlim1',
+                      type = str, 
+                      help = 'the dimensions of the map box <x1> <x2> <y1> <y2> <z1> <z2>.',
+                      default = '0 200 0 200 0 200')
 
   args = parser.parse_args()
 
