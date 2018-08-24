@@ -64,7 +64,7 @@ expected outcome here
 
 * **Melanie Vollmar**
 * **James Parkhurst**
-* **Gwyndaf**
+* **Gwyndaf Evans**
 * expand this bit...
 
 
