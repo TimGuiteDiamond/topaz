@@ -6,17 +6,19 @@ setup(
     version = "0.0.1",
     author = "Jenna Elliott",
     author_email = "jenna.elliott@diamond.ac.uk",
-    description = "A package to convert an .mtz file to a map using CCP4",
+    description = "A package to convert an .phs file to a map using CCP4",
     license = "BSD",
-    keywords = "awesome python package",
+    keywords = ".phs to .map conversion",
     packages=[
       'topaz',
       'tests',
     ],
     scripts=[
+      'bin/RunTopaz'
     ],
     install_requires=[
-     # 'pytest',
+      'pytest',
+      'argparse'
     ],
     classifiers=[
         "Development Status :: 3 - Alpha",
