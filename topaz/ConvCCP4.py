@@ -7,7 +7,7 @@ from CCP4Dispatchers import dispatcher_builder
 
 ####################################################################
 
-class Convert_tools:
+class ConvertTools:
 
   ''' A class of all conversion functions used in Topaz'''
 

@@ -3,12 +3,12 @@
 program!! '''
 
 ####################################################################
-from data_get import BestSym
-from ConvCCP4 import Convert_tools
+from data_get import BestSym, str2bool
+from ConvCCP4 import ConvertTools
 import os
 import shutil
 #####################################################################
-def phs2map(folder,output_dir,output_dir2,xyzlim,raw = True):
+def phs2map(folder,output_dir,output_dir2,xyzlim,raw = False):
 
     '''converts phs files to map files. 
     
@@ -128,13 +128,13 @@ def phs2map(folder,output_dir,output_dir2,xyzlim,raw = True):
             text.close()
                  
             print 'calling phs2mtz'
-            Convert_tools.phs2mtz(phsfile,mtzfile,temp_out,logfile,type_name)
+            ConvertTools.phs2mtz(phsfile,mtzfile,temp_out,logfile,type_name)
 
             print 'calling mtz2map'
-            Convert_tools.mtz2map(temp_out,output_dir,logfile,type_name)
+            ConvertTools.mtz2map(temp_out,output_dir,logfile,type_name)
 
             print 'calling mapbox'
-            Convert_tools.mapbox(output_dir,output_dir2,mtzfile,type_name,xyzlim,logfile)
+            ConvertTools.mapbox(output_dir,output_dir2,mtzfile,type_name,xyzlim,logfile)
         else:
           continue
   
@@ -146,7 +146,7 @@ def phs2map(folder,output_dir,output_dir2,xyzlim,raw = True):
 
 ########################################################################
 #now try to make a module
-def main():
+def run():
 
   '''
   Calls phs2map with ability to call from command line. 
@@ -159,6 +159,7 @@ def main():
   * **xyzlim1:** 0 200 0 200 0 200
   '''
   import argparse
+
 
   parser = argparse.ArgumentParser(description='command line argument')
   parser.add_argument('--out1',
@@ -176,11 +177,16 @@ def main():
                       type = str, 
                       help = 'the directory to find the files (inc EP_Phasing and 20171025)', 
                       default = '/dls/mx-scratch/melanie/for_METRIX/results_201710')
-  parser.add_argument('--xyslim1', 
+  parser.add_argument('--xyzlim1', 
                       dest = 'xyzlim1',
                       type = str, 
                       help = 'the dimensions of the map box <x1> <x2> <y1> <y2> <z1> <z2>.',
                       default = '0 200 0 200 0 200')
+  parser.add_argument('--raw',
+                      dest = 'raw',
+                      type = str2bool,
+                      help = 'whether the data should be processed or not',
+                      default = False)
 
   args = parser.parse_args()
 
@@ -189,12 +195,12 @@ def main():
   folder1=args.folder1
   xyzlim1=args.xyzlim1
 
-  phs2map(folder1,out1,out2,xyzlim1)
+  phs2map(args.folder1,args.out1,args.out2,args.xyzlim1,args.raw)
 
 #######################################################################  
 
 if __name__ == "__main__":
-  main()
+  run()
 
 #########################################################################
   

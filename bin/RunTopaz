@@ -1,0 +1,6 @@
+#!/bin/env ccp4-python
+
+from topaz import running.py
+
+if __name__=='__main__':
+  running.run()

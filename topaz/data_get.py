@@ -102,3 +102,11 @@ class MtzData(object):
     text.close()
     return cell0
 ###################################################################################
+
+def str2bool(v):
+  if v.lower() in ('yes','true','True','t','y','1'):
+    return True
+  elif v.lower() in ('no','false','False','f','n','0'):
+    return False
+  else: 
+    raise argparse.ArgumentTypeError('Boolean valuse expected')
