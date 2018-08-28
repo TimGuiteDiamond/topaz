@@ -1,4 +1,4 @@
-# Topaz: Very much work in progress
+# Topaz
 
 Topaz is a package that converts .phs data files for electron density into
 .maps. This is done my calling functions from within CCP4 using CCP4Dispatchers.
