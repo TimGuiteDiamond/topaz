@@ -39,9 +39,12 @@ required are as follows:
 * --xyzlim1: Dimensions for tessalated map
 * --raw: Whether the data is only the heavy atom positions or not. 
 
-Example of how to call:
+Example of how to call, if the default is needed there is not need to specify
+the argument:
 ```
-example here: - currently not working...
+> RunTopaz --out1=/DIRECTORy/ --out2=/DIRECTORY/ --folder=/DIRECTORY/
+
+- currently not working...
 ```
 
 ### Running tests
@@ -74,6 +77,5 @@ expected outcome here
 * **Melanie Vollmar**: Supervisor
 * **James Parkhurst**
 * **Gwyndaf Evans**
-* expand this bit...
 
 
