@@ -1,0 +1,8 @@
+#!/bin/env ccp4-python
+
+from tests import testtopaz
+
+if __name__=="__main__":
+  testtopaz.testrun()
+
+

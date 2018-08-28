@@ -4,6 +4,7 @@ from __future__ import division
 from string import Template
 import os
 from CCP4Dispatchers import dispatcher_builder
+import logging
 
 ####################################################################
 
@@ -12,7 +13,7 @@ class ConvertTools:
   ''' A class of all conversion functions used in Topaz'''
 
 #########################################################################
-  def mtz2map(folder,out,logfile,name):
+  def mtz2map(folder,out,name):
 
     '''mtz2map converts an mtz file of the electron denstity to an electron
     density map file and saves this file
@@ -25,14 +26,15 @@ class ConvertTools:
     '''
   
     #opening logfile
-    text=open(logfile,'a')
+    #text=open(logfile,'a')
 
     mtzin=str(os.path.join(folder,name+'.mtz'))
 
     assert os.path.exists(folder)
     assert os.path.exists(out)
     if not os.path.exists(mtzin):
-      text.write('mtzin %s does not exist for mtz2map' %mtzin)
+      #text.write('mtzin %s does not exist for mtz2map' %mtzin)
+      logging.info('mtzin %s does not exist for mtz2map' %mtzin)
       raise RuntimeError('mtzin %s does not exist for mtz2map' %mtzin)
     
 
@@ -52,17 +54,19 @@ class ConvertTools:
     d.call()
 
     if not os.path.exists(mapout):
-      text.write('mapout %s does not exist, the mtz2map did not work'%mapout)
+      #text.write('mapout %s does not exist, the mtz2map did not work'%mapout)
+      logging.warning('mapout %s does not exist, the mtz2map did not work' %mapout)
       raise RuntimeError('mapout %s does not exist, the mtz2map did not work' %mapout)
     assert os.path.exists(mapout)
 
-    text.write('mtz2map successful\n')
-    text.close()
+    #text.write('mtz2map successful\n')
+    #text.close()
+    logging.info('mtz2map successful\n')
   
   mtz2map=staticmethod(mtz2map)
 #####################################################################
 
-  def phs2mtz(phsfile,mtzfile,out,logfile,name):
+  def phs2mtz(phsfile,mtzfile,out,name):
 
       '''phs2mtz takes a phs file and an mtz file and outputs an mtz file of the
       electron density
@@ -76,10 +80,10 @@ class ConvertTools:
       '''
 
       #opening logfile
-      text= open(logfile,'a')
+      #text= open(logfile,'a')
 
       from data_get import MtzData
-      y=MtzData(mtzfile,logfile)
+      y=MtzData(mtzfile)
       
       #checking correct paths exist
       assert os.path.exists(phsfile)
@@ -110,16 +114,18 @@ class ConvertTools:
       d.call()
   
       if not os.path.exists(hklout):
-        text.write('hklout %s does not exist, the phs2mtz program has not worked.'%hklout)
+        #text.write('hklout %s does not exist, the phs2mtz program has not worked.'%hklout)
+        logging.warning('hklout %s does not exist, the phs2mtz program has not worked.'%hklout)
         raise RuntimeError('hklout %s does not exist, the phs2mtz program has not worked.'%hklout)
 
-      text.write('phs2mtz successful\n')
-      text.close()
+      #text.write('phs2mtz successful\n')
+      #text.close()
+      logging.info('phs2mtz successful\n')
   
   phs2mtz=staticmethod(phs2mtz)
   #############################################################################
    
-  def mapbox(folder,out,mtzfile,name,xyzlim,logfile):
+  def mapbox(folder,out,mtzfile,name,xyzlim):
 
     '''
     mapbox converts a map into a map of a given size using the symmetry group
@@ -133,7 +139,7 @@ class ConvertTools:
     logfile: file to log progress
     '''
   
-    text=open(logfile,'a')
+    #text=open(logfile,'a')
   
     mapin = os.path.join(folder, name +'.map')
     mapout = os.path.join(out,name)+'.map'
@@ -141,7 +147,7 @@ class ConvertTools:
     
     #use MtzData to get symmetry group
     from data_get import MtzData
-    y=MtzData(mtzfile,logfile)
+    y=MtzData(mtzfile)
     sym=str(y.sg_num)
     
     #Using dispatcher
@@ -159,11 +165,13 @@ class ConvertTools:
     
       
     if not os.path.exists(mapout):
-      text.write('mapout %s does not exist, the mapbox program has not worked.'%mapout)
+      #text.write('mapout %s does not exist, the mapbox program has not worked.'%mapout)
+      logging.warning('mapout %s does not exist, the mapbox progam has not worked.'%mapout)
       raise RuntimeError('mapout %s does not exist, the mapbox program has not worked.' %mapout)
   
-    text.write('mapbox successful\n')
-    text.close()
+    #text.write('mapbox successful\n')
+    #text.close()
+    logging.info('mapbox successful\n')
   
   mapbox=staticmethod(mapbox)
 ###################################################################################

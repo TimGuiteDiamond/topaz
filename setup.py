@@ -14,7 +14,8 @@ setup(
       'tests',
     ],
     scripts=[
-      'bin/RunTopaz'
+      'bin/RunTopaz',
+      'bin/TestTopaz'
     ],
     install_requires=[
       'pytest',

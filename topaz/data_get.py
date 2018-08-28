@@ -38,7 +38,7 @@ class MtzData(object):
 
   '''Class to retrive symmetry group and cell dimentsions from mtz file '''
 
-  def __init__(self, filename,logfile):
+  def __init__(self, filename):
 
     '''
     **Arguments:**
@@ -49,6 +49,7 @@ class MtzData(object):
     '''
     from iotbx import mtz
     import os.path
+    import logging
 
     if filename is None:
       raise RuntimeError('Need to specify hklin filename')
@@ -58,15 +59,16 @@ class MtzData(object):
 
     self.mtz_file = mtz.object(filename)
     self.sg_num = self.mtz_file.space_group_number()
-    self.cell= self._get_cell(logfile)
+    self.cell= self._get_cell()
 
-    text=open(logfile,'a')
-    text.write('MtzData successful\n')
-    text.close()
+    #text=open(logfile,'a')
+    #text.write('MtzData successful\n')
+    #text.close()
+    logging.info('MtzData successful\n')
 
     return
 
-  def _get_cell(self,logfile):
+  def _get_cell(self):
 
     '''
     This function is used to extract the unit cell information from an MTZ file.
@@ -79,8 +81,8 @@ class MtzData(object):
 
     '''
   
-    text=open(logfile,'a')
-    
+    #text=open(logfile,'a')
+    import logging 
     from libtbx.test_utils import approx_equal
     xls=self.mtz_file.crystals()
     ucs=[e.unit_cell() for e in xls]
@@ -90,16 +92,19 @@ class MtzData(object):
   
     if not tst:
       print "multiple unit cells found! Only the firlst will be used:"
-      text.write('Multiple unit cells found! Only the first will be used\n')
+      #text.write('Multiple unit cells found! Only the first will be used\n')
+      logging.info('Multiple unit cells found! Only the first will be used\n')
       for cell in ucs:
         print cell.parameters()
-        text.write(str(cell.parameters()))
+        #text.write(str(cell.parameters()))
+        logging.info(str(cell.parameters()))
   
         #this could be improved by finding a way for one to continue by picking a
         #particular cell
   
-    text.write('_get_cell successful\n')
-    text.close()
+    #text.write('_get_cell successful\n')
+    #text.close()
+    logging.info('_get_cell successful\n')
     return cell0
 ###################################################################################
 

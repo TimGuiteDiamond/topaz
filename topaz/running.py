@@ -7,6 +7,8 @@ from data_get import BestSym, str2bool
 from ConvCCP4 import ConvertTools
 import os
 import shutil
+import time
+import logging
 #####################################################################
 def phs2map(folder,output_dir,output_dir2,xyzlim,raw = False):
 
@@ -32,6 +34,11 @@ def phs2map(folder,output_dir,output_dir2,xyzlim,raw = False):
     else:
       fileend = '.phs'
 
+    trialnum=1
+    date = str(time.strftime("%d%m%y"))
+    while os.path.exists(os.path.join(output_dir, 'logfile_phs2map'+date+'_'+str(trialnum)+'.txt')):
+      trialnum+=1
+
     #check that the output  directories does not already exist
 
     if not os.path.isdir(output_dir):
@@ -43,11 +50,13 @@ def phs2map(folder,output_dir,output_dir2,xyzlim,raw = False):
       os.mkdir(output_dir2)
 
 #m can be deleated after tests
-#    m=0
+    m=0
 
-    logfile=os.path.join(output_dir, 'logfile_phs2map.txt')
-    text = open(logfile,'a')
-    text.write('This is a log file for the process of phs2map. \n')
+    logfile=os.path.join(output_dir, 'logfile_phs2map'+date+'_'+str(trialnum)+'.txt')
+    logging.basicConfig(filename = logfile, level = logging.DEBUG)
+    logging.info('This is a log file for the process of phs2map. ')
+    #text = open(logfile,'a')
+    #text.write('This is a log file for the process of phs2map. \n')
 
     
     #creating a tempory directory
@@ -59,14 +68,16 @@ def phs2map(folder,output_dir,output_dir2,xyzlim,raw = False):
       temp_out = os.path.join(output_dir,'tempfdr'+str(num))
       if num > 10:
         print 'there is a problem'
-        text.write('there is a problem with the number of tempory directories that already exist')
+        #text.write('there is a problem with the number of tempory directories that already exist')
+        logging.warning('there is a problem with the number of tempory directories that already exist')
         raise RuntimeError(
                 'there is a problem with the number of tempory directories that already exist')
     os.mkdir(temp_out)
     if not os.path.exists(temp_out):
-      text.write('there is a problem creating a tempory directory')
+      #text.write('there is a problem creating a tempory directory')
+      logging.warning('there is a problem creating a tempory directory')
       raise RuntimeError('there is a problem creating a tempory directory')
-    text.close()
+    #text.close()
 
 
     #finding all information
@@ -78,15 +89,18 @@ def phs2map(folder,output_dir,output_dir2,xyzlim,raw = False):
         print protein_name
         #protein_name, e.g. = 3S6E
 
-        text=open(logfile,'a')
-        text.write('\n\n'+protein_name+' \n')
+        #text=open(logfile,'a')
+        #text.write('\n\n'+protein_name+' \n')
+        logging.info('\n\n'+protein_name+'\n')
+
          
         mtzfile = os.path.join(mtz_name_directory,
                                 protein_name,
                                 'DataFiles/AUTOMATIC_DEFAULT_free.mtz')
         if not os.path.exists(mtzfile):
           print '%s does not exist' %mtzfile
-          text.write('%s does not exist\n' %mtzfile)
+          #text.write('%s does not exist\n' %mtzfile)
+          logging.info('%s does not exist\n' %mtzfile)
           continue
 
 
@@ -95,23 +109,25 @@ def phs2map(folder,output_dir,output_dir2,xyzlim,raw = False):
                                   'simple_xia2_to_shelxcde.log')
         if not os.path.exists(infofile):
           print 'simple_xia2_to_shelxcde.log does not exist for '+protein_name
-          text.write('simple_xia2_to_shelxcde.log does not exist for %s\n ' %protein_name)
+          #text.write('simple_xia2_to_shelxcde.log does not exist for %s\n ' %protein_name)
+          logging.info('simple_xia2_to_shelxcde.log does not exist for %s\n' %protein_name)
           continue
-        text.close()
+        #text.close()
 
         print infofile
         best_symmetry = str(BestSym(infofile).best)
 
-#        m+=1
-#        if m>3:
-#          break
+        m+=1
+        if m>2:
+          break
 
         phsdir = os.path.join(protein_name_directory,protein_name,best_symmetry)
         if not os.path.exists(phsdir):
           print '%s does not exist' %phsdir
-          text=open(logfile,'a')
-          text.write('%s does not exist\n' %phsdir)
-          text.close()
+          #text=open(logfile,'a')
+          #text.write('%s does not exist\n' %phsdir)
+          #text.close()
+          logging.info('%s does not exist\n' %phsdir)
           continue
 
 
@@ -123,18 +139,19 @@ def phs2map(folder,output_dir,output_dir2,xyzlim,raw = False):
             #name e.g. = 3S6E_i.phs
             phsfile  = os.path.join(phsdir,name) 
 
-            text=open(logfile,'a')
-            text.write('\n'+name+'\n')
-            text.close()
+            #text=open(logfile,'a')
+            #text.write('\n'+name+'\n')
+            #text.close()
+            logging.info('\n'+name+'\n')
                  
             print 'calling phs2mtz'
-            ConvertTools.phs2mtz(phsfile,mtzfile,temp_out,logfile,type_name)
+            ConvertTools.phs2mtz(phsfile,mtzfile,temp_out,type_name)
 
             print 'calling mtz2map'
-            ConvertTools.mtz2map(temp_out,output_dir,logfile,type_name)
+            ConvertTools.mtz2map(temp_out,output_dir,type_name)
 
             print 'calling mapbox'
-            ConvertTools.mapbox(output_dir,output_dir2,mtzfile,type_name,xyzlim,logfile)
+            ConvertTools.mapbox(output_dir,output_dir2,mtzfile,type_name,xyzlim)
         else:
           continue
   
@@ -190,10 +207,7 @@ def run():
 
   args = parser.parse_args()
 
-  out1=args.out1
-  out2=args.out2
-  folder1=args.folder1
-  xyzlim1=args.xyzlim1
+
 
   phs2map(args.folder1,args.out1,args.out2,args.xyzlim1,args.raw)
 

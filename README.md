@@ -24,7 +24,7 @@ give examples of how to install these things...
 
 ### Installing
 
-To get a development env running ...
+To get a development env running ... (also not working...)
 
 ### How to use
 
@@ -37,21 +37,27 @@ required are as follows:
 * --folder1: Directory to find files with phasing and symmetry. (e.g. Ep\_phasing
   and 20171025)
 * --xyzlim1: Dimensions for tessalated map
+* --raw: Whether the data is only the heavy atom positions or not. 
 
 Example of how to call:
 '''
-example here
+example here: - currently not working...
 '''
 
 ### Running tests
 
-To run the tests ...
+To run the program the directories must have a certain setup, an example of this
+set up is included in the exampledir directory under the tests directory. In
+here is an example of the layout of directories that the program requires. 
+
+At the moment there is no data in these directories. If there were, the test
+could be run as follows: 
 
 '''
-example of tests
+> TestTopaz 
 '''
-
-expected outcome
+This should run topaz on the files in the exampledir/folder directory, and
+output the maps into exampledir/out1 and exampledir/out2
 '''
 expected outcome here
 '''
@@ -62,7 +68,7 @@ expected outcome here
 
 ## Acknowledgements
 
-* **Melanie Vollmar**
+* **Melanie Vollmar**: Supervisor
 * **James Parkhurst**
 * **Gwyndaf Evans**
 * expand this bit...
