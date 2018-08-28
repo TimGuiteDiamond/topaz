@@ -67,11 +67,6 @@ could be run as follows:
 This should run topaz on the files in the exampledir/folder directory, and
 output the maps into exampledir/out1 and exampledir/out2
 
-```
-expected outcome here
-```
-
-
 ## Authors
 
 * **Jenna Elliott** 
