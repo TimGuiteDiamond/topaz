@@ -18,9 +18,9 @@ To install this software you will need:
 It is important to have already installed ccp4, CCP4Dispatchers and iotbox
 before running this program. 
 
-'''
+```
 give examples of how to install these things...
-'''
+```
 
 ### Installing
 
@@ -40,9 +40,9 @@ required are as follows:
 * --raw: Whether the data is only the heavy atom positions or not. 
 
 Example of how to call:
-'''
+```
 example here: - currently not working...
-'''
+```
 
 ### Running tests
 
@@ -53,14 +53,17 @@ here is an example of the layout of directories that the program requires.
 At the moment there is no data in these directories. If there were, the test
 could be run as follows: 
 
-'''
+```
 > TestTopaz 
-'''
+```
+
 This should run topaz on the files in the exampledir/folder directory, and
 output the maps into exampledir/out1 and exampledir/out2
-'''
+
+```
 expected outcome here
-'''
+```
+
 
 ## Authors
 
