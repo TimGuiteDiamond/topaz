@@ -18,13 +18,17 @@ To install this software you will need:
 It is important to have already installed ccp4, CCP4Dispatchers and iotbox
 before running this program. 
 
-```
-give examples of how to install these things...
-```
-
 ### Installing
 
-To get a development env running ... (also not working...)
+To get a development env running first download the package. Then go to the
+directory containing setup.py and type the following into the command line. 
+
+```
+> module load ccp4
+> ccp4-python setup.py develop --user
+```
+
+... (also not working...)
 
 ### How to use
 
@@ -42,7 +46,7 @@ required are as follows:
 Example of how to call, if the default is needed there is not need to specify
 the argument:
 ```
-> RunTopaz --out1=/DIRECTORy/ --out2=/DIRECTORY/ --folder=/DIRECTORY/
+> RunTopaz --out1=/DIRECTORY/ --out2=/DIRECTORY/ --folder=/DIRECTORY/
 
 - currently not working...
 ```
