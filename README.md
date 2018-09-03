@@ -16,7 +16,7 @@ These instructions will get a copy of the project working on your local machine.
 
 ### Prerequisites
 
-####Software
+#### Software
 To install this software you will need: 
 
 * pytest
@@ -26,7 +26,7 @@ These should all be installed (or already were installed) when the environment
 is setup (see Installing). However, you will need to have already installed ccp4
 before runing this program. 
 
-####Data
+#### Data
 To run the program the directories must have a certain setup, an example of this
 set up is included in the exampledir directory under the tests directory. In
 here is an example of the layout of directories that the program requires. 
