@@ -1,6 +1,11 @@
 
-'''Runs topaz. Converts phs files to map files - this is a very memory intensive
-program!! '''
+'''
+Runs topaz. Converts phs files to map files - this is a very memory intensive
+program!! 
+
+|
+
+'''
 
 ####################################################################
 from data_get import BestSym, str2bool
@@ -12,7 +17,8 @@ import logging
 #####################################################################
 def phs2map(folder,output_dir,output_dir2,xyzlim,raw = False):
 
-    '''converts phs files to map files. 
+    '''
+    Function converts phs files to map files. 
     
     Calls: BestSym, and Convert_tools
 
@@ -22,11 +28,14 @@ def phs2map(folder,output_dir,output_dir2,xyzlim,raw = False):
     * **output_dir:** The directoryto output the original(non-boxed)images.
     * **output_dir2:** The directory to output the maps as boxes
     * **xyzlim:** The dimensions of the required map box <x1> <x2> <y1> <y2> <z1> <z2>.
+    * **raw**: Boolean, true if using heavy atom position data. 
 
     **Outputs:**
 
-    * **Map images**
+    * **Map files**
 
+    |
+    
     '''
     
     if raw:
@@ -50,15 +59,12 @@ def phs2map(folder,output_dir,output_dir2,xyzlim,raw = False):
       os.mkdir(output_dir2)
 
 #m can be deleated after tests
-    m=0
+    #m=0
 
     logfile=os.path.join(output_dir, 'logfile_phs2map'+date+'_'+str(trialnum)+'.txt')
     logging.basicConfig(filename = logfile, level = logging.DEBUG)
     logging.info('This is a log file for the process of phs2map. ')
-    #text = open(logfile,'a')
-    #text.write('This is a log file for the process of phs2map. \n')
-
-    
+        
     #creating a tempory directory
     print('creating a tempory directory')
     temp_out = os.path.join(output_dir,'tempfdr')
@@ -68,17 +74,14 @@ def phs2map(folder,output_dir,output_dir2,xyzlim,raw = False):
       temp_out = os.path.join(output_dir,'tempfdr'+str(num))
       if num > 10:
         print 'there is a problem'
-        #text.write('there is a problem with the number of tempory directories that already exist')
         logging.warning('there is a problem with the number of tempory directories that already exist')
         raise RuntimeError(
                 'there is a problem with the number of tempory directories that already exist')
     os.mkdir(temp_out)
     if not os.path.exists(temp_out):
-      #text.write('there is a problem creating a tempory directory')
       logging.warning('there is a problem creating a tempory directory')
       raise RuntimeError('there is a problem creating a tempory directory')
-    #text.close()
-
+  
 
     #finding all information
     protein_name_directory = os.path.join(folder,'EP_phasing')
@@ -89,17 +92,13 @@ def phs2map(folder,output_dir,output_dir2,xyzlim,raw = False):
         print protein_name
         #protein_name, e.g. = 3S6E
 
-        #text=open(logfile,'a')
-        #text.write('\n\n'+protein_name+' \n')
         logging.info('\n\n'+protein_name+'\n')
-
-         
+  
         mtzfile = os.path.join(mtz_name_directory,
                                 protein_name,
                                 'DataFiles/AUTOMATIC_DEFAULT_free.mtz')
         if not os.path.exists(mtzfile):
           print '%s does not exist' %mtzfile
-          #text.write('%s does not exist\n' %mtzfile)
           logging.info('%s does not exist\n' %mtzfile)
           continue
 
@@ -108,25 +107,20 @@ def phs2map(folder,output_dir,output_dir2,xyzlim,raw = False):
                                   protein_name,
                                   'simple_xia2_to_shelxcde.log')
         if not os.path.exists(infofile):
-          print 'simple_xia2_to_shelxcde.log does not exist for '+protein_name
-          #text.write('simple_xia2_to_shelxcde.log does not exist for %s\n ' %protein_name)
+          print 'simple_xia2_to_shelxcde.log does not exist for '+protein_name         
           logging.info('simple_xia2_to_shelxcde.log does not exist for %s\n' %protein_name)
           continue
-        #text.close()
 
         print infofile
         best_symmetry = str(BestSym(infofile).best)
 
-        m+=1
-        if m>2:
-          break
+        #m+=1
+        #if m>2:
+        #  break
 
         phsdir = os.path.join(protein_name_directory,protein_name,best_symmetry)
         if not os.path.exists(phsdir):
-          print '%s does not exist' %phsdir
-          #text=open(logfile,'a')
-          #text.write('%s does not exist\n' %phsdir)
-          #text.close()
+          print '%s does not exist' %phsdir 
           logging.info('%s does not exist\n' %phsdir)
           continue
 
@@ -139,9 +133,6 @@ def phs2map(folder,output_dir,output_dir2,xyzlim,raw = False):
             #name e.g. = 3S6E_i.phs
             phsfile  = os.path.join(phsdir,name) 
 
-            #text=open(logfile,'a')
-            #text.write('\n'+name+'\n')
-            #text.close()
             logging.info('\n'+name+'\n')
                  
             print 'calling phs2mtz'
@@ -166,15 +157,24 @@ def phs2map(folder,output_dir,output_dir2,xyzlim,raw = False):
 def run():
 
   '''
-  Calls phs2map with ability to call from command line. 
+  Calls phs2map with ability to call from command line. Run from command line by
+  calling RunTopaz
 
   **default arguments:**
 
-  * **folder1:** /dls/mx-scratch/melanie/for_METRIX/results_201710
-  * **out1:** /dls/mx-scratch/ycc62267/mapfdrraw
-  * **out2:** /dls/mx-scratch/ycc62267/mapfdrrawbox
-  * **xyzlim1:** 0 200 0 200 0 200
+  * **folder1:** The directory to find the files, inc EP_phasing and 20171025
+                Default: /dls/mx-scratch/melanie/for_METRIX/results_201710
+  * **out1:** The directory to output the original (non-boxed) maps
+                Default: /dls/mx-scratch/ycc62267/mapfdrraw
+  * **out2:** The directory to output the maps as boxes
+                Default: /dls/mx-scratch/ycc62267/mapfdrrawbox
+  * **xyzlim1:** The dimensions of the map box
+                Default: 0 200 0 200 0 200
+  * **raw:** Boolean, whether the data should be processed, or just the heavy atom positions
+                Default: False
   '''
+
+
   import argparse
 
 
@@ -182,7 +182,7 @@ def run():
   parser.add_argument('--out1',
                       dest = 'out1', 
                       type = str, 
-                      help = 'the directoryto output the original(non-boxed)images.', 
+                      help = 'the directoryto output the original(non-boxed)maps.', 
                       default ='/dls/mx-scratch/ycc62267/mapfdrraw')
   parser.add_argument('--out2',
                       dest= 'out2', 
@@ -202,14 +202,18 @@ def run():
   parser.add_argument('--raw',
                       dest = 'raw',
                       type = str2bool,
-                      help = 'whether the data should be processed or not',
+                      help = 'boolean, whether the data should be processed or not',
                       default = False)
 
   args = parser.parse_args()
 
 
 
-  phs2map(args.folder1,args.out1,args.out2,args.xyzlim1,args.raw)
+  phs2map(args.folder1,
+          args.out1,
+          args.out2,
+          args.xyzlim1,
+          args.raw)
 
 #######################################################################  
 

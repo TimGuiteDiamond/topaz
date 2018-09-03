@@ -1,10 +1,13 @@
 # Topaz
 
 Topaz is a package that converts .phs data files for electron density into
-.maps. This is done my calling functions from within CCP4 using CCP4Dispatchers.
+.maps. This is written as a prerequesite data proccessing step to the package
+Eclip, the github repositary for Eclip can be found 
+[here](https://github.com/jmp1985/eclip). 
 
-The outputs of this are a set of .mtz files, a set of .maps of varying sizes and
-a set of maps that are all the same specified dimensions. 
+This package calls functions from within CCP4 using CCP4Dispatchers. The 
+outputs of this are a set of .mtz files, a set of .map files of various sizes
+and a set of .map files that are all the same specified dimensions. 
 
 
 ## Getting Started
@@ -13,28 +16,46 @@ These instructions will get a copy of the project working on your local machine.
 
 ### Prerequisites
 
+####Software
 To install this software you will need: 
 
-It is important to have already installed ccp4, CCP4Dispatchers and iotbox
-before running this program. 
+* pytest
+* argparse
+
+These should all be installed (or already were installed) when the environment
+is setup (see Installing). However, you will need to have already installed ccp4
+before runing this program. 
+
+####Data
+To run the program the directories must have a certain setup, an example of this
+set up is included in the exampledir directory under the tests directory. In
+here is an example of the layout of directories that the program requires. 
+
+The datafiles required per protein are:
+  * A .phs or .pha file - contains experimental data
+  * A simple\_xia2\_to\_shelxcode.log file - contains Best space group info
+  * A AUTOMATIC\_DEFAULT\_free.mtz file - contains cell dimension and symmetry
+    group 
+
+
 
 ### Installing
 
-To get a development env running first download the package. Then go to the
-directory containing setup.py and type the following into the command line. 
+To get a development env running first download the package. Then load ccp4,
+then go to the directory containing setup.py and type the following into the
+command line. 
 
 ```
-> module load ccp4
+> export Path=$PATH:/<your-ccp4-installation>
 > ccp4-python setup.py develop --user
 ```
 
-... (also not working...)
-
 ### How to use
 
-The program is run by calling running from the command line. The program must be
-called using CCP4python. The arguments
-required are as follows:
+The program is run by calling RunTopaz from the command line. The program must be
+called using CCP4python.
+
+The arguments required are as follows:
 
 * --out1: Location to save maps before tessalation
 * --out2: Location to save maps after tessalation
@@ -48,24 +69,7 @@ the argument:
 ```
 > RunTopaz --out1=/DIRECTORY/ --out2=/DIRECTORY/ --folder=/DIRECTORY/
 
-- currently not working...
 ```
-
-### Running tests
-
-To run the program the directories must have a certain setup, an example of this
-set up is included in the exampledir directory under the tests directory. In
-here is an example of the layout of directories that the program requires. 
-
-At the moment there is no data in these directories. If there were, the test
-could be run as follows: 
-
-```
-> TestTopaz 
-```
-
-This should run topaz on the files in the exampledir/folder directory, and
-output the maps into exampledir/out1 and exampledir/out2
 
 ## Authors
 
@@ -73,8 +77,8 @@ output the maps into exampledir/out1 and exampledir/out2
 
 ## Acknowledgements
 
-* **Melanie Vollmar**: Supervisor
-* **James Parkhurst**
-* **Gwyndaf Evans**
+* Supervisor: **Melanie Vollmar**: 
+* Co-supervisor: **James Parkhurst**
+* Principle Investigator: **Gwyndaf Evans**
 
 
