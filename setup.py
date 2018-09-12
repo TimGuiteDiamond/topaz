@@ -15,11 +15,11 @@ setup(
     ],
     scripts=[
       'bin/RunTopaz',
-      'bin/TestTopaz'
+      
     ],
     install_requires=[
       'pytest',
-      'argparse'
+      'argparse',
     ],
     classifiers=[
         "Development Status :: 3 - Alpha",
