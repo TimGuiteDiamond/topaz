@@ -1,0 +1,16 @@
+Running Tests
+============
+
+To check the package is installed properly, try running the test. 
+
+In the package, there is a tests directory. This directory contains an example
+directory for how the input directory must be structured. Currently there is not
+data in this directory. If there were, the test could be run as follows:
+
+  > TestTopaz
+
+This should run topaz on the files in the exampledir/foder directory, and output
+the maps into exampledir/out1 and exampledir/out2. 
+
+
+

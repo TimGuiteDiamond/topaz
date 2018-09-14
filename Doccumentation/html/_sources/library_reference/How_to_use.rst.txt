@@ -1,0 +1,36 @@
+How to use
+============
+The program is run by calling RunTopaz from the command line. 
+
+.. _arguments:
+
+Arguments
+-----------
+
+The arguments are as follows: 
+
+* --out: Location to save maps before tessalation
+* --out2: Location to save maps after tessalation
+* --folder1: Directory to find files with phasing and symmetry. (e.g. EP\_phasing and 20171025)
+* --xyzlim1: Dimensions for tesssalated map
+* --raw: Boolean, whether the data is only the heavy atom positions or not.
+
+To run the program, the directories must have a certain setup, an example of
+this set up is included in the exampledir directory under the tests directory.
+In here this an example of the layout of directories that the program requires. 
+
+.. _Examples:
+
+Examples of how to use
+------------------------
+
+The arguments only need to be specified if they differ from the default. The
+defaults can be found in the documentation for each function. 
+
+To run Topaz, type into the command line:
+
+  > RunTopaz --out1=/DIRECTORY/ --out2=/DIRECTORY/ --folder=/DIRECTORY/
+
+tHIS IS ALSO NOT WORKING ATM
+
+

@@ -1,0 +1,12 @@
+data_get Module
+===============
+
+Module contents
+---------------
+
+.. automodule:: topaz.data_get
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+

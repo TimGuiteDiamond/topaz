@@ -1,0 +1,95 @@
+.. _Topaz:
+
+*****
+Topaz
+*****
+Topaz is a package that converts .phs data files for electron density into
+.maps. This is written as a prerequesite data proccessing step to the package
+Eclip, documentation for which can be found `here
+<file:///dls/science/users/ycc62267/eclip/doc/_build/html/index.html>`.
+
+This package calls functions from within CCP4 using CCP4Dispatchers. The outputs
+of this are a set of .mtz files, and a set of .map files of various dimensions
+and a set of .map files that are all the same specified dimensions. 
+
+The github repositary for this package can be found `here
+<https://github.com/jmp1985/topaz>`_
+
+.. _getting-started:
+Getting Started
+=================
+These instructions will get Topaz running on your local machine. 
+
+.. toctree::
+   :maxdepth: 2
+
+   Getting_started.rst
+
+
+.. _how-to-use:
+How to use
+===========
+The program is run by calling RunTopaz from the command line. The program must
+be called using CCP4-python. 
+
+You can learn more about how to use this, and the arguments required, here:
+
+.. toctree::
+   :maxdepth: 2
+
+   How_to_use.rst
+   
+
+
+
+.. _contents-of-topaz:
+   
+Contents of Topaz
+===================
+Details on individual functions and their arguments can be found here:
+
+Running module
+---------------
+Running is the module that pulls together the functions in topaz to convert the
+.phs files into .map files. It then tessalates these map files using the best
+symmetry of the crystal to form a map of predefined dimensions. While converting from .phs to .map, it also creates .mtz files. 
+
+This can be run by calling RunTopaz from the command line. More information about the arguments of RunTopaz can be found in the documentation for running. 
+
+.. toctree::
+   :maxdepth: 4
+
+   running.rst
+
+ConvCCP4 module
+----------------
+ConvCCP4 is the module for classes and functions which are used for converting
+file types. 
+
+More information about each function can be found in the documentation below. 
+
+.. toctree::
+   :maxdepth: 4
+
+   ConvCCP4.rst
+
+data_get module
+----------------
+data_get is the module for classes and functions which are used for retrieving
+information from files. 
+
+More information about each funciton can be found in the documetnation below. 
+
+.. toctree::
+   :maxdepth: 4
+
+   data_get.rst
+
+.. _acknowledgements:
+Acknowledgements
+=================
+* Supervisor: Melanie Vollmar
+* Co-supervisor: James Parkhurst
+* Principle Investigator: Gwyndaf Evans
+
+

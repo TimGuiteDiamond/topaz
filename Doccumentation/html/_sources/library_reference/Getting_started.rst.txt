@@ -1,0 +1,31 @@
+Getting Started
+=================
+
+These instructions will get a copy of the package working on your local machine. 
+
+.. _prerequisites:
+
+Prerequisites
+----------------
+
+To install this software you will need:
+
+It is important to have already installed ccp4, CCP4Dispatchers and iotbox
+before running this program. 
+
+.. _Installing:
+
+Installing
+-------------
+
+To get a development environment running, first download the package. The code
+can be found on the github repositary `here
+<https://github.com/jmp1985/topaz>`_. Then go to the directory containing
+setup.py and type the following into the command line. 
+
+  > module load ccp4
+  > ccp4-python setup.py develop --user
+
+AT THE MOMENT THIS DOES NOT WORK AND NEEDS ADDRESSING 
+
+

@@ -1,0 +1,165 @@
+
+
+<!doctype html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>How to use &mdash; Topaz 0.0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/bizstyle.js"></script>
+    <link rel="top" title="Topaz 0.0.1 documentation" href="../index.html" />
+    <link rel="up" title="Topaz" href="modules.html" />
+    <link rel="next" title="RunTopaz Module" href="running.html" />
+    <link rel="prev" title="Getting Started" href="Getting_started.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="running.html" title="RunTopaz Module"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="Getting_started.html" title="Getting Started"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Topaz 0.0.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="modules.html" accesskey="U">Topaz</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">How to use</a><ul>
+<li><a class="reference internal" href="#arguments">Arguments</a></li>
+<li><a class="reference internal" href="#examples-of-how-to-use">Examples of how to use</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="Getting_started.html"
+                        title="previous chapter">Getting Started</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="running.html"
+                        title="next chapter">RunTopaz Module</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/library_reference/How_to_use.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="how-to-use">
+<h1>How to use<a class="headerlink" href="#how-to-use" title="Permalink to this headline">¶</a></h1>
+<p>The program is run by calling RunTopaz from the command line. Find the
+documentation for RunTopaz <a class="reference internal" href="running.html#runtopaz"><span>here</span></a>.</p>
+<div class="section" id="arguments">
+<span id="id1"></span><h2>Arguments<a class="headerlink" href="#arguments" title="Permalink to this headline">¶</a></h2>
+<p>The arguments are as follows:</p>
+<ul class="simple">
+<li>&#8211;out: Location to save maps before tessalation</li>
+<li>&#8211;out2: Location to save maps after tessalation</li>
+<li>&#8211;folder1: Directory to find files with phasing and symmetry, the .log files. (e.g. EP_phasing)</li>
+<li>&#8211;folder2: Directory to find the files with the cell dimenstions, the .mtz</li>
+</ul>
+<p>files (i.e. 20171025)
+* &#8211;xyzlim1: Dimensions for tesssalated map
+* &#8211;raw: Boolean, whether the data is only the heavy atom positions or not.</p>
+<p>To run the program, the directories must have a certain setup, an example of
+this set up is included in the exampledir directory under the tests directory.
+In here this an example of the layout of directories that the program requires.</p>
+</div>
+<div class="section" id="examples-of-how-to-use">
+<span id="examples"></span><h2>Examples of how to use<a class="headerlink" href="#examples-of-how-to-use" title="Permalink to this headline">¶</a></h2>
+<p>The arguments only need to be specified if they differ from the default. The
+defaults can be found in the documentation for each function.</p>
+<p>To run Topaz, type into the command line:</p>
+<div class="highlight-bash"><div class="highlight"><pre>RunTopaz --out1<span class="o">=</span>/DIRECTORY/ --out2<span class="o">=</span>/DIRECTORY/ --folder<span class="o">=</span>/DIRECTORY/
+</pre></div>
+</div>
+<p>tHIS IS ALSO NOT WORKING ATM</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="running.html" title="RunTopaz Module"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="Getting_started.html" title="Getting Started"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Topaz 0.0.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="modules.html" >Topaz</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2018, Jenna Elliott.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+  </body>
+</html>

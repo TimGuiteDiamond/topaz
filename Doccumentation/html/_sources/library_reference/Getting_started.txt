@@ -1,0 +1,88 @@
+Getting Started
+=================
+
+These instructions will get a copy of the package working on your local machine. 
+
+.. _prerequisites:
+
+Prerequisites
+----------------
+
+Software
+^^^^^^^^^
+
+To install this software you will need:
+
+* pytest
+* argparse
+
+These should all be installed (or already were installed) when the environment
+is setup (see :ref:`here`<Installing>`. However, you will need to have already
+installed ccp4, CCP4Dispatchers and iotbox. 
+
+.. warning::
+It is important to have already installed ccp4, CCP4Dispatchers and iotbox
+before running this program. 
+
+
+Data
+^^^^^
+To run this program, the input directories require a certain layout. 
+
+The datafiles (in .phs format, as produced by SHELXe) need to be in a directory
+named by the protein's Best symetry group (with the tile of the file being
+$protein_name.phs or $protein_name_i.phs). This directory should then be in a
+directory labelled by the protein's name. In this directory there should also be
+a log file labeled 'simple_xia2_to_shelxcde.log' which contains the characters:
+'Best space group: ' followed by the best symmetry group. Each of these directories, for each
+protein, should be in a overall directory. In the examples, this overall
+directory is refered to as 'EP_phasing'. 
+
+There should also be a file for each protein called
+'AUTOMATIC_DEFAULT_free.mtz'. These should each be in a directory labelled
+'Datafiles' within a directory labeled by the protein's name. These named
+directories should all be in one overall directory. In the examples, this is
+called '20171025'. 
+
+A diagram of this::
+
+  EP_phasing
+      - ProteinName1
+          - SpaceGroup
+              'ProteinName1.phs'
+          'simple_xia2_to_shelxcde.log'
+      - ProteinName2
+      .
+      .
+      .
+
+  20171025
+      - ProteinName1
+          - DataFiles
+            'AUTOMATIC_DEFAULT_free.mtz'
+      - ProteinName2
+      .
+      .
+      .
+
+
+
+.. _Installing:
+
+Installing
+-------------
+
+To get a development environment running, first download the package. The code
+can be found on the github repositary `here
+<https://github.com/jmp1985/topaz>`_. Then load ccp4, then go to the directory containing
+setup.py and type the following into the command line:
+
+
+.. code-block:: bash
+
+   export PATH=$PATH:~/<your ccp4 installation>
+   ccp4-python setup.py develop --user
+   
+
+
+

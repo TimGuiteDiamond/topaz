@@ -1,0 +1,38 @@
+grab package
+============
+
+Submodules
+----------
+
+grab.ConvCCP4_grab module
+-------------------------
+
+.. automodule:: topaz.grab.ConvCCP4_grab
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+grab.best module
+----------------
+
+.. automodule:: topaz.grab.best
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+grab.running_grab module
+------------------------
+
+.. automodule:: topaz.grab.running_grab
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: topaz.grab
+    :members:
+    :undoc-members:
+    :show-inheritance:

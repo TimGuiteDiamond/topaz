@@ -1,0 +1,38 @@
+state package
+=============
+
+Submodules
+----------
+
+state.ConvCCP4 module
+---------------------
+
+.. automodule:: topaz.state.ConvCCP4
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+state.data_get module
+---------------------
+
+.. automodule:: topaz.state.data_get
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+state.running module
+--------------------
+
+.. automodule:: topaz.state.running
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: topaz.state
+    :members:
+    :undoc-members:
+    :show-inheritance:
