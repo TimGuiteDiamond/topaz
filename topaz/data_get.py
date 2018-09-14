@@ -89,7 +89,7 @@ class MtzData(object):
     tst=all([cell0.is_similar_to(e) for e in ucs])
   
     if not tst:
-      print "multiple unit cells found! Only the firlst will be used:"
+      print "multiple unit cells found! Only the first will be used:"
       logging.info('Multiple unit cells found! Only the first will be used\n')
       for cell in ucs:
         print cell.parameters()

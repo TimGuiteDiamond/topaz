@@ -61,7 +61,9 @@ class ConvertTools:
     d=dispatcher_builder("cfft", cmd, keywords)
     d.call()
 
+    
     if not os.path.exists(mapout):
+      print keywords
       logging.warning('mapout %s does not exist, the mtz2map did not work' %mapout)
       raise RuntimeError('mapout %s does not exist, the mtz2map did not work' %mapout)
     assert os.path.exists(mapout)
@@ -117,7 +119,7 @@ class ConvertTools:
 
       d=dispatcher_builder("f2mtz", cmd, keywords)
       d.call()
-  
+       
       if not os.path.exists(hklout):
         logging.warning('hklout %s does not exist, the phs2mtz program has not worked.'%hklout)
         raise RuntimeError('hklout %s does not exist, the phs2mtz program has not worked.'%hklout)
