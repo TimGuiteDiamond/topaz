@@ -3,7 +3,7 @@
 Topaz is a package that converts .phs data files for electron density into
 .maps. This is written as a prerequesite data proccessing step to the package
 Eclip, the github repositary for Eclip can be found 
-[here](https://github.com/jmp1985/eclip). 
+[here](https://github.com/TimGuiteDiamond\/eclip).
 
 This package calls functions from within CCP4 using CCP4Dispatchers. The 
 outputs of this are a set of .mtz files, a set of .map files of various sizes
